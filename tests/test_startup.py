@@ -55,7 +55,10 @@ class StartupTest(unittest.TestCase):
                         )
                         logs = result.stdout + result.stderr
                         if "Listening on" in logs:
-                            listing = docker("exec", name, "cook", "server", "user", "list")
+                            listing = docker(
+                                "exec", "--env", "COOK_CONFIG_DIR=/data/cookcli",
+                                name, "cook", "server", "user", "list",
+                            )
                             self.assertEqual(
                                 {line.split()[0] for line in listing.splitlines() if line.strip()},
                                 {"jp", "jpsuffix"},
