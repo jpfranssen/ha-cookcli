@@ -1,0 +1,22 @@
+name: CookCLI
+version: "0.2.1"
+slug: cookcli
+description: Cooklang receptenserver met gebruikersbeheer
+arch:
+  - amd64
+startup: application
+boot: auto
+init: false
+ports:
+  9080/tcp: 9080
+ports_description:
+  9080/tcp: CookCLI webinterface
+map:
+  - type: share
+    read_only: false
+options:
+  users: []
+schema:
+  users:
+    - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
+      password: password

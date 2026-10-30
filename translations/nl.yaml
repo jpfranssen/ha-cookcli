@@ -1,0 +1,9 @@
+configuration:
+  users:
+    name: Gebruikers
+    description: Accounts met schrijfrechten in CookCLI; bezoekers mogen recepten bekijken.
+    fields:
+      username:
+        name: Gebruikersnaam
+      password:
+        name: Wachtwoord
