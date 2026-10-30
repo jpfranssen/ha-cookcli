@@ -1,4 +1,7 @@
 configuration:
+  cors_origin:
+    name: Vertrouwd webadres
+    description: "Vul voor toegang via een hostnaam het exacte browseradres in, bijvoorbeeld http://homeassistant.local:9080. Inclusief protocol en poort, zonder afsluitende slash. Laat leeg voor toegang via een IP-adres."
   users:
     name: Gebruikers
     description: Accounts met schrijfrechten in CookCLI; bezoekers mogen recepten bekijken.

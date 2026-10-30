@@ -4,7 +4,7 @@
 
 Browse and manage your [Cooklang](https://cooklang.org/) recipes with CookCLI, running as a Home Assistant app. Keep your recipes as plain `.cook` files in Home Assistant's shared folder and configure accounts from the app's Configuration tab.
 
-**Experimental:** this project is in early development. The current app version is **0.2.1**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
+**Experimental:** this project is in early development. The current app version is **0.2.2**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
 
 ## Install
 
@@ -28,6 +28,8 @@ Or add it manually:
 
 6. Start the app and check the **Log** tab.
 7. Open `http://<home-assistant-ip>:9080`, for example `http://192.168.1.100:9080`.
+
+To use a hostname such as `homeassistant.local`, set **Trusted web origin** (`cors_origin`) to `http://homeassistant.local:9080`, save and restart. See [hostname access](DOCS.md#access-through-a-hostname).
 
 On a fresh installation without users, anyone who can reach CookCLI can make changes. Once an account exists, visitors can browse recipes and signing in is required to make changes. CookCLI accounts are separate from Home Assistant accounts.
 

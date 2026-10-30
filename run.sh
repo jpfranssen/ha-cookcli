@@ -48,4 +48,11 @@ if [ -s "$NEW_STATE" ]; then
 fi
 
 echo "CookCLI recipes: $RECIPES"
-exec cook server "$RECIPES" --host --port 9080
+set -- cook server "$RECIPES" --host --port 9080
+if [ -s "$OPTIONS" ]; then
+  cors_origin=$(jq -r '.cors_origin // empty' "$OPTIONS")
+  if [ -n "$cors_origin" ]; then
+    set -- "$@" --cors-origin "$cors_origin"
+  fi
+fi
+exec "$@"

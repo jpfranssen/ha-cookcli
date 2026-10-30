@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.2.2
 
+- Add a configurable trusted web origin for hostname access while keeping CSRF and DNS rebinding checks enabled.
 - Replace ambiguous shell conditionals to pass ShellCheck and report state-file move failures.
 - Add an MIT license.
 - Add CI for app linting, shell checks, amd64 Docker builds and basic image checks.

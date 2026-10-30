@@ -1,4 +1,7 @@
 configuration:
+  cors_origin:
+    name: Trusted web origin
+    description: "For hostname access, enter the exact browser origin, for example http://homeassistant.local:9080. Include the scheme and port, without a trailing slash. Leave empty for IP address access."
   users:
     name: Users
     description: Accounts with write access in CookCLI; visitors can browse recipes.

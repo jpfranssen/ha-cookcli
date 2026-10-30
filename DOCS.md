@@ -6,6 +6,18 @@ Start the app and open `http://<home-assistant-ip>:9080` in your browser. If you
 
 The interface uses its own port and accounts. Home Assistant ingress and automatic Home Assistant sign-in are not currently available. Start with the IP address rather than a hostname if you have connection problems.
 
+### Access through a hostname
+
+CookCLI accepts IP addresses by default. To use `http://homeassistant.local:9080`, open the app's **Configuration** tab and set **Trusted web origin** (`cors_origin`):
+
+```yaml
+cors_origin: "http://homeassistant.local:9080"
+```
+
+Keep your existing `users` configuration, save and restart the app. Use the exact origin from your browser: scheme (`http` or `https`), hostname and port, without a path or trailing slash. If you change the host port, update this setting too. Leave it empty when using only an IP address.
+
+The setting passes `--cors-origin` to CookCLI and preserves its CSRF and DNS rebinding protection. An explicit origin is required because an arbitrary hostname could resolve to your server. See the [upstream server documentation](https://github.com/cooklang/cookcli#cook-server).
+
 ## Configure users
 
 Open the app's **Configuration** tab. Add users through the form or use YAML:
@@ -101,5 +113,6 @@ A repository installation has a different internal app ID from a local installat
 - **CookCLI is missing from the store:** check that your device uses `amd64`, refresh the store and check the Supervisor logs for repository loading errors.
 - **Installation fails:** check the build output in the Supervisor logs. Installation needs internet access to download the CookCLI base image and packages.
 - **The web interface does not open:** check that the app is running and confirm the configured host port. Try your Home Assistant IP address instead of a hostname.
+- **CookCLI reports an untrusted hostname:** configure `cors_origin` as described above, or connect using the IP address.
 - **Sign-in fails:** check username capitalization, save the configuration and restart the app. Check the app log for account creation or password update errors.
 - **No recipes are visible:** check that the files have a `.cook` extension and are under `/share/cooklang/recipes`, rather than `/config`.

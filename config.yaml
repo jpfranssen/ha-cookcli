@@ -1,5 +1,5 @@
 name: CookCLI
-version: "0.2.1"
+version: "0.2.2"
 slug: cookcli
 description: Cooklang recipe server with user management
 url: https://github.com/jpfranssen/ha-cookcli
@@ -16,7 +16,9 @@ map:
     read_only: false
 options:
   users: []
+  cors_origin: ""
 schema:
+  cors_origin: "str?"
   users:
     - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
       password: password
