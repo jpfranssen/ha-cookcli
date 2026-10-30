@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+
+- Match usernames in the first column of CookCLI's user list, which also includes roles.
+- Stop startup if listing existing accounts fails instead of trying to create them again.
+- Add a container regression test for similar usernames, restarts and password changes.
+
 ## 0.2.2
 
 - Add a configurable trusted web origin for hostname access while keeping CSRF and DNS rebinding checks enabled.

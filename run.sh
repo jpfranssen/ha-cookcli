@@ -30,7 +30,10 @@ if [ -s "$OPTIONS" ]; then
     fi
     fingerprint=$(printf '%s' "$password" | sha256sum | cut -d ' ' -f1)
     previous=$(awk -F '\t' -v u="$username" '$1==u {print $2; exit}' "$STATE")
-    if ! cook server user list 2>/dev/null | grep -Fxq -- "$username"; then
+    # CookCLI lists a padded username followed by its role.
+    # Capture separately so a failed list command cannot be mistaken for a missing user.
+    user_list=$(cook server user list)
+    if ! printf '%s\n' "$user_list" | awk -v u="$username" '$1 == u {found=1} END {exit !found}'; then
       printf '%s\n' "$password" | cook server user add "$username" >/dev/null
       echo "CookCLI: user added: $username"
     elif [ "$fingerprint" != "$previous" ]; then

@@ -1,5 +1,5 @@
 name: CookCLI
-version: "0.2.2"
+version: "0.2.3"
 slug: cookcli
 description: Cooklang recipe server with user management
 url: https://github.com/jpfranssen/ha-cookcli

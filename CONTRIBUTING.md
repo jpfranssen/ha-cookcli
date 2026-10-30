@@ -23,14 +23,14 @@ Before submitting a change:
 3. Test installation in Home Assistant OS on amd64. Check startup, account creation, password changes, recipe editing and persistence after a restart.
 4. Confirm that `jan` and `jansen` are treated as separate accounts and that removing a configured user does not silently delete their account.
 
-A successful Docker build does not replace a Home Assistant installation test. Full account and recipe runtime tests have not been added yet.
+A successful Docker build does not replace a Home Assistant installation test. After building `ha-cookcli:ci`, run `python3 tests/test_startup.py` to test account creation with a similar existing username, restarts and password changes against the real image. Recipe editing still requires a manual test.
 
 ## Continuous integration
 
 The [CI workflow](.github/workflows/ci.yaml) runs on pushes and pull requests, and can also be started manually from GitHub's Actions tab. It uses two jobs:
 
 - **Lint:** check shell syntax with `sh`, analyze `run.sh` with ShellCheck, and validate the app with the Home Assistant app linter used by the official example repository.
-- **Build:** build the Linux amd64 Docker image, check the packaged script's syntax, and run `cook --version` to check that the binary starts.
+- **Build:** build the Linux amd64 Docker image, check the packaged script's syntax, run `cook --version`, and test persistent user setup across container restarts.
 
 The workflow builds a test image on a temporary GitHub runner. It does not publish images to a registry or deploy updates to Home Assistant. No registry credentials are needed. Results and failure logs appear in the repository's Actions tab and on pull requests. Requiring these checks before merging is a separate GitHub branch protection setting.
 

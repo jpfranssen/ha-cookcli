@@ -56,3 +56,6 @@ jobs:
         run: |
           docker run --rm --entrypoint /bin/sh ha-cookcli:ci -n /run.sh
           docker run --rm --entrypoint cook ha-cookcli:ci --version
+
+      - name: Test persistent user setup and restarts
+        run: python3 tests/test_startup.py

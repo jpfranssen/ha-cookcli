@@ -4,7 +4,7 @@
 
 Browse and manage your [Cooklang](https://cooklang.org/) recipes with CookCLI, running as a Home Assistant app. Keep your recipes as plain `.cook` files in Home Assistant's shared folder and configure accounts from the app's Configuration tab.
 
-**Experimental:** this project is in early development. The current app version is **0.2.2**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
+**Experimental:** this project is in early development. The current app version is **0.2.3**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
 
 ## Install
 
