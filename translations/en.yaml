@@ -1,0 +1,11 @@
+configuration:
+  users:
+    name: Users
+    description: Accounts with write access in CookCLI; visitors can browse recipes.
+    fields:
+      username:
+        name: Username
+      password:
+        name: Password
+network:
+  9080/tcp: CookCLI web interface

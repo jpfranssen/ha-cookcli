@@ -7,3 +7,5 @@ configuration:
         name: Gebruikersnaam
       password:
         name: Wachtwoord
+network:
+  9080/tcp: CookCLI-webinterface

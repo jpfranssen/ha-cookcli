@@ -24,15 +24,15 @@ if [ -s "$OPTIONS" ]; then
   while IFS= read -r item; do
     username=$(printf '%s' "$item" | base64 -d | jq -r '.username')
     password=$(printf '%s' "$item" | base64 -d | jq -r '.password')
-    [ -n "$username" ] && [ -n "$password" ] || { echo 'ERROR: Gebruikersnaam of wachtwoord ontbreekt' >&2; exit 1; }
+    [ -n "$username" ] && [ -n "$password" ] || { echo 'ERROR: Username or password is missing' >&2; exit 1; }
     fingerprint=$(printf '%s' "$password" | sha256sum | cut -d ' ' -f1)
     previous=$(awk -F '\t' -v u="$username" '$1==u {print $2; exit}' "$STATE")
     if ! cook server user list 2>/dev/null | grep -Fxq -- "$username"; then
       printf '%s\n' "$password" | cook server user add "$username" >/dev/null
-      echo "CookCLI: gebruiker toegevoegd: $username"
+      echo "CookCLI: user added: $username"
     elif [ "$fingerprint" != "$previous" ]; then
       printf '%s\n' "$password" | cook server user passwd "$username" >/dev/null
-      echo "CookCLI: wachtwoord bijgewerkt: $username"
+      echo "CookCLI: password updated: $username"
     fi
     printf '%s\t%s\n' "$username" "$fingerprint" >> "$NEW_STATE"
   done < "$ITEMS"

@@ -1,16 +1,16 @@
 name: CookCLI
 version: "0.2.1"
 slug: cookcli
-description: Cooklang receptenserver met gebruikersbeheer
+description: Cooklang recipe server with user management
+url: https://github.com/jpfranssen/ha-cookcli
+stage: experimental
 arch:
   - amd64
-startup: application
-boot: auto
 init: false
 ports:
   9080/tcp: 9080
 ports_description:
-  9080/tcp: CookCLI webinterface
+  9080/tcp: CookCLI web interface
 map:
   - type: share
     read_only: false
