@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Replace ambiguous shell conditionals to pass ShellCheck and report state-file move failures.
 - Add an MIT license.
 - Add CI for app linting, shell checks, amd64 Docker builds and basic image checks.
 - Remove explicit default startup options to satisfy the app linter.

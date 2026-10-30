@@ -24,7 +24,10 @@ if [ -s "$OPTIONS" ]; then
   while IFS= read -r item; do
     username=$(printf '%s' "$item" | base64 -d | jq -r '.username')
     password=$(printf '%s' "$item" | base64 -d | jq -r '.password')
-    [ -n "$username" ] && [ -n "$password" ] || { echo 'ERROR: Username or password is missing' >&2; exit 1; }
+    if [ -z "$username" ] || [ -z "$password" ]; then
+      echo 'ERROR: Username or password is missing' >&2
+      exit 1
+    fi
     fingerprint=$(printf '%s' "$password" | sha256sum | cut -d ' ' -f1)
     previous=$(awk -F '\t' -v u="$username" '$1==u {print $2; exit}' "$STATE")
     if ! cook server user list 2>/dev/null | grep -Fxq -- "$username"; then
@@ -40,7 +43,9 @@ if [ -s "$OPTIONS" ]; then
 fi
 # Do not automatically remove CookCLI accounts omitted in HA options.
 # The server's persistent users file remains the source of truth.
-[ -s "$NEW_STATE" ] && mv "$NEW_STATE" "$STATE" || true
+if [ -s "$NEW_STATE" ]; then
+  mv "$NEW_STATE" "$STATE"
+fi
 
 echo "CookCLI recipes: $RECIPES"
 exec cook server "$RECIPES" --host --port 9080
