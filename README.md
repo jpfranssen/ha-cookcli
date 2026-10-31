@@ -4,7 +4,7 @@
 
 Browse and manage your [Cooklang](https://cooklang.org/) recipes with CookCLI, running as a Home Assistant app. Keep your recipes as plain `.cook` files in Home Assistant's shared folder and configure accounts from the app's Configuration tab.
 
-**Experimental:** this project is in early development. The current app version is **0.2.3**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
+**Experimental:** this project is in early development. The current app version is **0.3.0**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
 
 ## Install
 
@@ -45,6 +45,14 @@ With the **Samba share** app, Windows users can access the folder at:
 \\<home-assistant-ip>\share\cooklang\recipes
 ```
 
+## Git synchronization
+
+Optionally synchronize a recipe repository with your own Git server or GitHub. The app commits web edits, fetches and merges remote changes, and pushes without rewriting history. Configure `sync.git` in Home Assistant; it is disabled by default. Enter an HTTPS access token or SSH private key directly in the app configuration, with secret references supported. SSH file inputs remain available. See the [setup and conflict recovery guide](DOCS.md#git-synchronization).
+
+In Git mode CookCLI serves `/share/cooklang/git/repository/<recipes_subdirectory>`. Existing files in `/share/cooklang/recipes` are never overwritten. Conflicts leave the local recipes usable and preserve both commits. The web server briefly restarts when committing or integrating changes; network operations run while it is available.
+
+Phone synchronization is not included yet. The coordinator and Git backend are separate so a future phone transport can use the same recipe directory and coordinate writes.
+
 ## Documentation
 
 Read the [user guide](DOCS.md) for account configuration, a sample recipe, storage, backups and troubleshooting. It is also available from the app's **Documentation** tab in Home Assistant.
@@ -58,9 +66,10 @@ Read the [user guide](DOCS.md) for account configuration, a sample recipe, stora
 
 - Only `amd64` is supported.
 - The web interface uses a separate HTTP port, defaulting to `9080`; Home Assistant ingress and automatic Home Assistant sign-in are not implemented.
-- The recipe directory is fixed at `/share/cooklang/recipes`.
+- Local mode uses `/share/cooklang/recipes`; Git mode uses a subdirectory of its own checkout.
 - Removing a user from the app configuration does not delete their CookCLI account.
-- Recipes are not automatically synchronized with a Git repository.
+- Git conflicts require manual resolution; there is no conflict editor or Home Assistant status entity yet.
+- Git sync supports SSH keys and HTTPS tokens; encrypted SSH keys and phone synchronization are not implemented.
 - Images are built on installation; prebuilt images are not published yet.
 
 ## License

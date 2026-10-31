@@ -39,6 +39,9 @@ jobs:
         with:
           path: .
 
+      - name: Test Git synchronization with local repositories
+        run: python3 -m unittest discover -s tests -p test_git_sync.py -v
+
   build:
     name: Build amd64 Docker image
     runs-on: ubuntu-latest
@@ -59,3 +62,16 @@ jobs:
 
       - name: Test persistent user setup and restarts
         run: python3 tests/test_startup.py
+
+      - name: Test packaged Git backend
+        run: >-
+          docker run --rm -v "$PWD/tests:/tests:ro"
+          -e PYTHONPATH=/app -e PYTHONDONTWRITEBYTECODE=1
+          --entrypoint python3 ha-cookcli:ci
+          -m unittest discover -s /tests -p test_git_sync.py -v
+
+      - name: Test authenticated web edits and HTTPS Git synchronization
+        run: >-
+          docker run --rm -v "$PWD/tests:/tests:ro"
+          -e PYTHONPATH=/app -e PYTHONDONTWRITEBYTECODE=1
+          --entrypoint python3 ha-cookcli:ci /tests/container_git_sync.py -v

@@ -1,4 +1,45 @@
 configuration:
+  sync:
+    name: Synchronization
+    description: Optional Git synchronization. Phone synchronization can be added separately later.
+    fields:
+      git:
+        name: Git
+        fields:
+          enabled:
+            name: Enable Git synchronization
+          repository:
+            name: Repository URL
+            description: SSH or HTTPS URL for your Git server. Do not include passwords or tokens in this URL.
+          https_username:
+            name: HTTPS username
+            description: Your GitHub username, or the username required by your Git server.
+          https_token:
+            name: HTTPS access token
+            description: GitHub personal access token or a token from your own Git server. Only used with HTTPS URLs.
+          private_key:
+            name: SSH private key
+            description: Paste a dedicated private key using a YAML block, or a secret reference. Overrides the private key file.
+          known_hosts:
+            name: Verified SSH host keys
+            description: Paste the verified known_hosts entries for your Git server. Overrides the known hosts file.
+          branch:
+            name: Branch
+          recipes_subdirectory:
+            name: Recipes subdirectory
+            description: Relative path inside the repository, for example recepten. The repository root is not supported.
+          interval_seconds:
+            name: Synchronization interval (seconds)
+          author_name:
+            name: Commit author name
+          author_email:
+            name: Commit author email
+          private_key_file:
+            name: SSH private key file
+            description: Path under /share/cooklang/ssh/. Use a dedicated key without a passphrase.
+          known_hosts_file:
+            name: SSH known hosts file
+            description: Path under /share/cooklang/ssh/ containing the verified Git server host key.
   cors_origin:
     name: Trusted web origin
     description: "For hostname access, enter the exact browser origin, for example http://homeassistant.local:9080. Include the scheme and port, without a trailing slash. Leave empty for IP address access."

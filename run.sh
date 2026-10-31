@@ -58,4 +58,7 @@ if [ -s "$OPTIONS" ]; then
     set -- "$@" --cors-origin "$cors_origin"
   fi
 fi
+if [ -s "$OPTIONS" ] && [ "$(jq -r '.sync.git.enabled // false' "$OPTIONS")" = true ]; then
+  exec python3 /app/sync_service.py "$@"
+fi
 exec "$@"

@@ -1,4 +1,45 @@
 configuration:
+  sync:
+    name: Synchronisatie
+    description: Optionele Git-synchronisatie. Telefoonsynchronisatie kan later apart worden toegevoegd.
+    fields:
+      git:
+        name: Git
+        fields:
+          enabled:
+            name: Git-synchronisatie inschakelen
+          repository:
+            name: Repository-URL
+            description: SSH- of HTTPS-URL van je Git-server. Vul geen wachtwoorden of tokens in deze URL in.
+          https_username:
+            name: HTTPS-gebruikersnaam
+            description: Je GitHub-gebruikersnaam, of de gebruikersnaam die je eigen Git-server vereist.
+          https_token:
+            name: HTTPS-toegangstoken
+            description: GitHub personal access token of een token van je eigen Git-server. Alleen voor HTTPS-URL's.
+          private_key:
+            name: SSH-privésleutel
+            description: Plak een aparte privésleutel als YAML-blok of gebruik een secret-verwijzing. Heeft voorrang op het sleutelbestand.
+          known_hosts:
+            name: Gecontroleerde SSH-hostsleutels
+            description: Plak de gecontroleerde known_hosts-regels van je Git-server. Heeft voorrang op het hostsleutelbestand.
+          branch:
+            name: Branch
+          recipes_subdirectory:
+            name: Receptenmap in de repository
+            description: Relatief pad in de repository, bijvoorbeeld recepten. De hoofdmap van de repository wordt niet ondersteund.
+          interval_seconds:
+            name: Synchronisatie-interval (seconden)
+          author_name:
+            name: Naam voor commits
+          author_email:
+            name: E-mailadres voor commits
+          private_key_file:
+            name: Bestand met SSH-privésleutel
+            description: Pad onder /share/cooklang/ssh/. Gebruik een aparte sleutel zonder wachtwoordzin.
+          known_hosts_file:
+            name: Bestand met bekende SSH-hosts
+            description: Pad onder /share/cooklang/ssh/ met de gecontroleerde hostsleutel van de Git-server.
   cors_origin:
     name: Vertrouwd webadres
     description: "Vul voor toegang via een hostnaam het exacte browseradres in, bijvoorbeeld http://homeassistant.local:9080. Inclusief protocol en poort, zonder afsluitende slash. Laat leeg voor toegang via een IP-adres."

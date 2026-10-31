@@ -1,5 +1,5 @@
 name: CookCLI
-version: "0.2.3"
+version: "0.3.0"
 slug: cookcli
 description: Cooklang recipe server with user management
 url: https://github.com/jpfranssen/ha-cookcli
@@ -7,6 +7,7 @@ stage: experimental
 arch:
   - amd64
 init: false
+timeout: 120
 ports:
   9080/tcp: 9080
 ports_description:
@@ -17,7 +18,33 @@ map:
 options:
   users: []
   cors_origin: ""
+  sync:
+    git:
+      enabled: false
+      repository: ""
+      branch: main
+      recipes_subdirectory: recepten
+      interval_seconds: 60
+      author_name: Home Assistant
+      author_email: home-assistant@localhost
+      private_key_file: /share/cooklang/ssh/id_ed25519
+      known_hosts_file: /share/cooklang/ssh/known_hosts
 schema:
+  sync:
+    git:
+      enabled: bool
+      repository: str
+      branch: str
+      recipes_subdirectory: str
+      interval_seconds: int(10,86400)
+      author_name: str
+      author_email: str
+      https_username: str?
+      https_token: password?
+      private_key: password?
+      known_hosts: str?
+      private_key_file: str
+      known_hosts_file: str
   cors_origin: "str?"
   users:
     - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
