@@ -17,7 +17,8 @@ map:
     read_only: false
 options:
   users: []
-  cors_origin: ""
+  cors_origins:
+    - str
   sync:
     git:
       enabled: false
