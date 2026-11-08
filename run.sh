@@ -53,10 +53,15 @@ fi
 echo "CookCLI recipes: $RECIPES"
 set -- cook server "$RECIPES" --host --port 9080
 if [ -s "$OPTIONS" ]; then
-  cors_origin=$(jq -r '.cors_origin // empty' "$OPTIONS")
-  if [ -n "$cors_origin" ]; then
-    set -- "$@" --cors-origin "$cors_origin"
-  fi
+  origins_file=$(mktemp /data/cookcli-origins.XXXXXX)
+
+  jq -r '.cors_origins // [] | .[]' "$OPTIONS" > "$origins_file"
+
+  while IFS= read -r origin; do
+    [ -n "$origin" ] && set -- "$@" --cors-origin "$origin"
+  done < "$origins_file"
+
+  rm -f "$origins_file"
 fi
 if [ -s "$OPTIONS" ] && [ "$(jq -r '.sync.git.enabled // false' "$OPTIONS")" = true ]; then
   exec python3 /app/sync_service.py "$@"
