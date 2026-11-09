@@ -51,7 +51,38 @@ if [ -s "$NEW_STATE" ]; then
 fi
 
 echo "CookCLI recipes: $RECIPES"
+
 set -- cook server "$RECIPES" --host --port 9080
+
+# Retrieve the dynamic Home Assistant Ingress URL.
+if [ -n "${SUPERVISOR_TOKEN:-}" ]; then
+  ingress_prefix=$(python3 - <<'PY'
+import json
+import os
+import urllib.request
+
+request = urllib.request.Request(
+    "http://supervisor/addons/self/info",
+    headers={
+        "Authorization": f"Bearer {os.environ['SUPERVISOR_TOKEN']}"
+    },
+)
+
+try:
+    with urllib.request.urlopen(request, timeout=5) as response:
+        data = json.load(response)
+    print((data.get("data", {}).get("ingress_url") or "").rstrip("/"))
+except Exception as exc:
+    print(f"CookCLI: Ingress lookup failed: {exc}", file=__import__("sys").stderr)
+PY
+  )
+
+  if [ -n "$ingress_prefix" ]; then
+    echo "CookCLI: Ingress enabled"
+    set -- "$@" --url-prefix "$ingress_prefix" --proxy-strips-prefix
+  fi
+fi
+
 if [ -s "$OPTIONS" ]; then
   origins_file=$(mktemp /data/cookcli-origins.XXXXXX)
 
