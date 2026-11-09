@@ -53,7 +53,7 @@ schema:
       known_hosts: str?
       private_key_file: str
       known_hosts_file: str
-  cors_origins: 
+  cors_origins:
     - str
   users:
     - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
