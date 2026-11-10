@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.5
+
+- Start in Home Assistant through **Open Web UI**, with an optional **Recepten** sidebar entry.
+- Disable the direct HTTP host port by default. Existing saved mappings still apply. Enable the port under **Configuration → Network** for direct access or the CookCLI integration.
+- Add a quick start and a separate Git synchronization guide with a complete GitHub configuration.
+
 ## 0.4.4
 
 - Update the bundled CookCLI server to [0.41.1](https://github.com/cooklang/cookcli/tree/v0.41.1) and align the Docker build label with the app version.

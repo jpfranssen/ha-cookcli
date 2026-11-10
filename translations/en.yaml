@@ -52,4 +52,4 @@ configuration:
       password:
         name: Password
 network:
-  9080/tcp: CookCLI web interface
+  9080/tcp: Optional direct HTTP access for API clients

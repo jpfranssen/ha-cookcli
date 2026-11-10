@@ -10,6 +10,7 @@ This repository contains a single app at its root. `repository.yaml` describes t
 
 - `README.md`: overview and installation.
 - `DOCS.md`: configuration and usage, also shown in Home Assistant.
+- `docs/`: detailed guides, including Git synchronization.
 - `CHANGELOG.md`: changes by app version.
 - `run.sh`: persistent storage setup, account configuration and server startup.
 - `sync_service.py`: server lifecycle, edit settling and sync coordination.

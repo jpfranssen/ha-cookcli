@@ -1,5 +1,5 @@
 name: CookCLI
-version: "0.4.4"
+version: "0.4.5"
 slug: cookcli
 description: Cooklang recipe server with user management
 url: https://github.com/jpfranssen/ha-cookcli
@@ -9,9 +9,9 @@ arch:
 init: false
 timeout: 120
 ports:
-  9080/tcp: 9080
+  9080/tcp: null
 ports_description:
-  9080/tcp: CookCLI web interface
+  9080/tcp: Optional direct HTTP access for API clients
 
 # Home Assistant Ingress
 ingress: true
