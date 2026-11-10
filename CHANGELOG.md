@@ -1,9 +1,12 @@
 # Changelog
 
-## 0.4.3
+## 0.4.4
 
 - Update the bundled CookCLI server to [0.41.1](https://github.com/cooklang/cookcli/tree/v0.41.1) and align the Docker build label with the app version.
 - Update the English and Dutch labels for `cors_origins`. The restart test checks that both configured hostnames work and an unlisted hostname is rejected.
+
+## 0.4.3
+
 - Look up the app's Ingress path from the Home Assistant Supervisor at startup and pass it to CookCLI. Links, redirects and cookies carry the path that Home Assistant uses to reach the app.
 - Log Supervisor lookup failures and continue startup with the default URL configuration if no Ingress path is available.
 

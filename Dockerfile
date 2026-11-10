@@ -1,6 +1,6 @@
 FROM ghcr.io/cooklang/cookcli:0.41.1
 
-ARG BUILD_VERSION=0.4.3
+ARG BUILD_VERSION=0.4.4
 LABEL io.hass.version="${BUILD_VERSION}" \
       io.hass.type="app" \
       io.hass.arch="amd64"

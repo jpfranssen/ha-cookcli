@@ -4,7 +4,7 @@
 
 Browse and manage your [Cooklang](https://cooklang.org/) recipes from Home Assistant. CookCLI opens inside Home Assistant through Ingress, with an optional sidebar entry. Keep recipes as plain `.cook` files in Home Assistant's shared folder or synchronize them with a Git repository.
 
-**Experimental** — App version **0.4.3** uses **CookCLI 0.41.1** and supports **amd64 (Intel/AMD x86-64)**.
+**Experimental** — App version **0.4.4** uses **CookCLI 0.41.1** and supports **amd64 (Intel/AMD x86-64)**.
 
 ## Install
 
