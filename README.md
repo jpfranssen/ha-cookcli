@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/jpfranssen/ha-cookcli/actions/workflows/ci.yaml/badge.svg)](https://github.com/jpfranssen/ha-cookcli/actions/workflows/ci.yaml)
 
-Browse and manage your [Cooklang](https://cooklang.org/) recipes from Home Assistant. CookCLI opens inside Home Assistant through Ingress, with an optional sidebar entry. Keep recipes as plain `.cook` files in Home Assistant's shared folder or synchronize them with a Git repository.
+This independent community app packages the CookCLI server for Home Assistant OS. Browse and manage recipes through Ingress and optionally pin the app to the sidebar. Keep recipes as plain `.cook` files in Home Assistant's shared folder or synchronize them with a Git repository. [Cooklang](https://cooklang.org/) · [CookCLI](https://github.com/cooklang/cookcli)
 
 **Experimental** — App version **0.4.5** uses **CookCLI 0.41.1** and supports **amd64 (Intel/AMD x86-64)**.
 
@@ -26,7 +26,6 @@ Read the [user guide](DOCS.md) for account configuration, a sample recipe, stora
 - [Changelog](CHANGELOG.md)
 - [Contributing and releases](CONTRIBUTING.md)
 - [Report a bug or request a feature](https://github.com/jpfranssen/ha-cookcli/issues)
-- [Upstream CookCLI](https://github.com/cooklang/cookcli)
 
 ## Current limitations
 
@@ -37,6 +36,10 @@ Read the [user guide](DOCS.md) for account configuration, a sample recipe, stora
 - Git sync supports SSH keys and HTTPS tokens; encrypted SSH keys and phone synchronization are not implemented.
 - Images are built on installation; prebuilt images are not published yet.
 
-## License
+## Credits and licensing
 
-This repository is licensed under the [MIT License](LICENSE). CookCLI and other bundled dependencies retain their own licenses.
+Thanks to Alexey Dubovskoy and the Cooklang contributors for creating and maintaining CookCLI and the Cooklang ecosystem. [Upstream project](https://github.com/cooklang/cookcli)
+
+The Cooklang project also maintains a separate Home Assistant integration that connects to a running CookCLI server to provide calendar, pantry and shopping list entities. [CookCLI integration](https://github.com/cooklang/homeassistant-cookcli)
+
+The app code in this repository is available under the MIT License. CookCLI has its own MIT license. Keep the upstream copyright and license notice when redistributing CookCLI. [App license](LICENSE) · [CookCLI license](https://github.com/cooklang/cookcli/blob/v0.41.1/LICENSE)
