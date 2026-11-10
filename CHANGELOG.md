@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.4.3
+
+- Update the bundled CookCLI server to [0.41.1](https://github.com/cooklang/cookcli/tree/v0.41.1) and align the Docker build label with the app version.
+- Update the English and Dutch labels for `cors_origins`. The restart test checks that both configured hostnames work and an unlisted hostname is rejected.
+- Look up the app's Ingress path from the Home Assistant Supervisor at startup and pass it to CookCLI. Links, redirects and cookies carry the path that Home Assistant uses to reach the app.
+- Log Supervisor lookup failures and continue startup with the default URL configuration if no Ingress path is available.
+
+## 0.4.2
+
+- Enable Home Assistant Ingress on port `9080` and configure the optional **Recepten** sidebar entry with a chef-hat icon.
+
+## 0.4.1
+
+- Complete the move from `cors_origin` to `cors_origins` by declaring a list of strings in the Home Assistant schema and defaulting it to an empty list. Move any previously configured origin into the new list when upgrading.
+
+## 0.4.0
+
+- Read trusted browser origins from the `cors_origins` list and pass each non-empty entry to CookCLI. The configuration schema and default were corrected in `0.4.1`.
+
 ## 0.3.0
 
 - Add optional two-way Git synchronization with a configurable branch, recipe subdirectory, interval and commit identity.

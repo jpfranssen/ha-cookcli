@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+from textwrap import dedent
 import time
 import unittest
 import uuid
@@ -39,7 +40,10 @@ class StartupTest(unittest.TestCase):
             def configure(password):
                 options.write_text(json.dumps({
                     "users": [{"username": "jp", "password": password}],
-                    "cors_origin": "http://homeassistant.local:9080",
+                    "cors_origins": [
+                        "http://homeassistant.local:9080",
+                        "http://recipes.local:9080",
+                    ],
                 }), encoding="utf-8")
 
             def start_and_stop():
@@ -63,6 +67,18 @@ class StartupTest(unittest.TestCase):
                                 {line.split()[0] for line in listing.splitlines() if line.strip()},
                                 {"jp", "jpsuffix"},
                             )
+                            statuses = docker("exec", name, "python3", "-c", dedent("""\
+                                from http.client import HTTPConnection
+
+                                for host in ("homeassistant.local", "recipes.local", "untrusted.local"):
+                                    connection = HTTPConnection("127.0.0.1", 9080, timeout=5)
+                                    try:
+                                        connection.request("GET", "/api/stats", headers={"Host": f"{host}:9080"})
+                                        print(connection.getresponse().status)
+                                    finally:
+                                        connection.close()
+                                """))
+                            self.assertEqual(statuses.splitlines(), ["200", "200", "403"])
                             return logs
                         if docker("inspect", "--format", "{{.State.Running}}", name).strip() != "true":
                             self.fail(f"Container exited before serving:\n{logs}")

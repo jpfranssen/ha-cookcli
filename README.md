@@ -2,9 +2,9 @@
 
 [![CI](https://github.com/jpfranssen/ha-cookcli/actions/workflows/ci.yaml/badge.svg)](https://github.com/jpfranssen/ha-cookcli/actions/workflows/ci.yaml)
 
-Browse and manage your [Cooklang](https://cooklang.org/) recipes with CookCLI, running as a Home Assistant app. Keep your recipes as plain `.cook` files in Home Assistant's shared folder and configure accounts from the app's Configuration tab.
+Browse and manage your [Cooklang](https://cooklang.org/) recipes from Home Assistant. CookCLI opens inside Home Assistant through Ingress, with an optional sidebar entry. Keep recipes as plain `.cook` files in Home Assistant's shared folder or synchronize them with a Git repository.
 
-**Experimental:** this project is in early development. The current app version is **0.3.0**, based on **CookCLI 0.39.0**. Only **amd64 (Intel/AMD x86-64)** is supported. Raspberry Pi, Home Assistant Green and other ARM devices are not supported yet.
+**Experimental** — App version **0.4.3** uses **CookCLI 0.41.1** and supports **amd64 (Intel/AMD x86-64)**.
 
 ## Install
 
@@ -27,11 +27,11 @@ Or add it manually:
    ```
 
 6. Start the app and check the **Log** tab.
-7. Open `http://<home-assistant-ip>:9080`, for example `http://192.168.1.100:9080`.
+7. Select **Open Web UI** on the CookCLI app page. Enable **Show in sidebar** to add the **Recepten** entry with a chef-hat icon.
 
-To use a hostname such as `homeassistant.local`, set **Trusted web origin** (`cors_origin`) to `http://homeassistant.local:9080`, save and restart. See [hostname access](DOCS.md#access-through-a-hostname).
+The direct HTTP listener is published on port `9080` by default. For a browser origin that CookCLI rejects, add the exact URL origin to the `cors_origins` list, save and restart. When upgrading from `0.3.0` or earlier, move any existing `cors_origin` value into that list. See [web access and configuration examples](DOCS.md#open-the-web-interface).
 
-On a fresh installation without users, anyone who can reach CookCLI can make changes. Once an account exists, visitors can browse recipes and signing in is required to make changes. CookCLI accounts are separate from Home Assistant accounts.
+Home Assistant controls access to Ingress. CookCLI accounts separately control who can make changes in the recipe UI. On a fresh installation without users, anyone who can reach CookCLI can make changes. Once an account exists, visitors can browse recipes and must sign in to make changes.
 
 See Home Assistant's [third-party repository installation guide](https://www.home-assistant.io/common-tasks/os#installing-a-third-party-app-repository) for more information.
 
@@ -51,8 +51,6 @@ Optionally synchronize a recipe repository with your own Git server or GitHub. T
 
 In Git mode CookCLI serves `/share/cooklang/git/repository/<recipes_subdirectory>`. Existing files in `/share/cooklang/recipes` are never overwritten. Conflicts leave the local recipes usable and preserve both commits. The web server briefly restarts when committing or integrating changes; network operations run while it is available.
 
-Phone synchronization is not included yet. The coordinator and Git backend are separate so a future phone transport can use the same recipe directory and coordinate writes.
-
 ## Documentation
 
 Read the [user guide](DOCS.md) for account configuration, a sample recipe, storage, backups and troubleshooting. It is also available from the app's **Documentation** tab in Home Assistant.
@@ -65,7 +63,6 @@ Read the [user guide](DOCS.md) for account configuration, a sample recipe, stora
 ## Current limitations
 
 - Only `amd64` is supported.
-- The web interface uses a separate HTTP port, defaulting to `9080`; Home Assistant ingress and automatic Home Assistant sign-in are not implemented.
 - Local mode uses `/share/cooklang/recipes`; Git mode uses a subdirectory of its own checkout.
 - Removing a user from the app configuration does not delete their CookCLI account.
 - Git conflicts require manual resolution; there is no conflict editor or Home Assistant status entity yet.

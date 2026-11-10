@@ -40,9 +40,9 @@ configuration:
           known_hosts_file:
             name: Bestand met bekende SSH-hosts
             description: Pad onder /share/cooklang/ssh/ met de gecontroleerde hostsleutel van de Git-server.
-  cors_origin:
-    name: Vertrouwd webadres
-    description: "Vul voor toegang via een hostnaam het exacte browseradres in, bijvoorbeeld http://homeassistant.local:9080. Inclusief protocol en poort, zonder afsluitende slash. Laat leeg voor toegang via een IP-adres."
+  cors_origins:
+    name: Vertrouwde webadressen
+    description: "Voeg per hostnaam het exacte adres toe, bijvoorbeeld http://homeassistant.local:9080. Neem het protocol en de poort op. Laat het pad en de afsluitende slash weg."
   users:
     name: Gebruikers
     description: Accounts met schrijfrechten in CookCLI; bezoekers mogen recepten bekijken.

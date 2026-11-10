@@ -2,21 +2,25 @@
 
 ## Open the web interface
 
-Start the app and open `http://<home-assistant-ip>:9080` in your browser. If you change the host port under **Network**, use that port instead.
+Start the app and select **Open Web UI** on its Home Assistant app page. Enable **Show in sidebar** to open it from the **Recepten** sidebar entry. The app gets its Ingress path from the Supervisor at startup so CookCLI can generate links and redirects under that path.
 
-The interface uses its own port and accounts. Home Assistant ingress and automatic Home Assistant sign-in are not currently available. Start with the IP address rather than a hostname if you have connection problems.
+Home Assistant controls access through Ingress. Sign in with a CookCLI account to make recipe changes when account protection is enabled.
+
+The app also publishes an HTTP listener at `http://<home-assistant-ip>:9080`. If you change the host port under **Network**, use that port in the address. When Ingress is active, CookCLI generates links using the Ingress path, so open the UI through Home Assistant for navigation.
 
 ### Access through a hostname
 
-CookCLI accepts IP addresses by default. To use `http://homeassistant.local:9080`, open the app's **Configuration** tab and set **Trusted web origin** (`cors_origin`):
+CookCLI accepts IP addresses by default. If CookCLI rejects a hostname or browser origin, add the exact browser origin to `cors_origins` in the app's **Configuration** tab. For example, the first entry below is for direct HTTP access and the second is for Ingress through a Home Assistant instance opened at `http://homeassistant.local:8123`.
 
 ```yaml
-cors_origin: "http://homeassistant.local:9080"
+cors_origins:
+  - "http://homeassistant.local:9080"
+  - "http://homeassistant.local:8123"
 ```
 
-Keep your existing `users` configuration, save and restart the app. Use the exact origin from your browser: scheme (`http` or `https`), hostname and port, without a path or trailing slash. If you change the host port, update this setting too. Leave it empty when using only an IP address.
+Use the scheme, hostname and port from your browser's address. Omit the path, including any Ingress path, and the trailing slash. Keep your existing `users` configuration, save and restart the app. The default is `cors_origins: []`.
 
-The setting passes `--cors-origin` to CookCLI and preserves its CSRF and DNS rebinding protection. An explicit origin is required because an arbitrary hostname could resolve to your server. See the [upstream server documentation](https://github.com/cooklang/cookcli#cook-server).
+When upgrading from `0.3.0` or earlier, replace the single `cors_origin` setting with a `cors_origins` list and copy the old value into it. Each entry is passed to CookCLI as a `--cors-origin` argument. CSRF and DNS rebinding checks remain enabled. See the [upstream server documentation](https://github.com/cooklang/cookcli#cook-server).
 
 ## Configure users
 
@@ -135,7 +139,7 @@ If you prefer file inputs, copy them through Samba, for example into `\\<home-as
 
 ### Configure Git
 
-Keep your existing `users` and `cors_origin` settings and add:
+Keep your existing `users` and `cors_origins` settings and add:
 
 ```yaml
 sync:
@@ -163,7 +167,7 @@ Changing the repository, branch or recipe subdirectory after setup requires manu
 
 Every interval, the coordinator checks whether recipe files have been stable for two seconds. If they keep changing, it waits until a later cycle. It fetches remote changes, briefly stops CookCLI, commits local changes and merges in an isolated worktree. Successful merges are applied while CookCLI is stopped, and the web server restarts even after a sync error. Fetch and push operations run while the web interface is available. Unchanged collections do not cause empty commits or server restarts.
 
-CookCLI 0.39.0 handles SIGTERM with graceful shutdown. If it does not exit within 15 seconds (for example because a connection stays open), the coordinator terminates it, restarts it and skips the local sync operation. Close the recipe editor and retry if this persists. A page may briefly lose its connection during a sync that changes files. Unsaved browser text has not reached Git; check that the editor has saved before leaving the page.
+CookCLI handles SIGTERM with graceful shutdown. If it does not exit within 15 seconds (for example because a connection stays open), the coordinator terminates it, restarts it and skips the local sync operation. Close the recipe editor and retry if this persists. A page may briefly lose its connection during a sync that changes files. Unsaved browser text has not reached Git; check that the editor has saved before leaving the page.
 
 - Offline: local edits are committed in the checkout and retried later. The first clone needs connectivity; an existing checkout can start offline.
 - Rejected push or concurrent remote push: local commits remain; the next cycle fetches and retries. The app never force-pushes.
@@ -207,8 +211,9 @@ A repository installation has a different internal app ID from a local installat
 
 - **CookCLI is missing from the store:** check that your device uses `amd64`, refresh the store and check the Supervisor logs for repository loading errors.
 - **Installation fails:** check the build output in the Supervisor logs. Installation needs internet access to download the CookCLI base image and packages.
-- **The web interface does not open:** check that the app is running and confirm the configured host port. Try your Home Assistant IP address instead of a hostname.
-- **CookCLI reports an untrusted hostname:** configure `cors_origin` as described above, or connect using the IP address.
+- **Ingress opens but links fail:** check the app log for `CookCLI: Ingress lookup failed`. The app needs the Ingress path from the Supervisor to generate links under it.
+- **The direct address does not open:** check that the app is running and confirm the configured host port. Try your Home Assistant IP address.
+- **CookCLI reports an untrusted hostname or origin:** add the browser origin to `cors_origins` and restart the app.
 - **Sign-in fails:** check username capitalization, save the configuration and restart the app. Check the app log for account creation or password update errors.
 - **No recipes are visible:** check that the files have a `.cook` extension and are under `/share/cooklang/recipes`, rather than `/config`.
 - **Git mode shows different recipes:** it serves the configured subdirectory under `/share/cooklang/git/repository`, not the old local recipe directory.
