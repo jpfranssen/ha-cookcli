@@ -8,9 +8,13 @@
 
 Home Assistant controls access through Ingress. Sign in with a CookCLI account to make recipe changes when account protection is enabled.
 
+When you access Home Assistant remotely, open CookCLI from the same Home Assistant session using **Open Web UI** or **Recepten** in the sidebar.
+
 ## Direct access for API clients
 
 New installations use Ingress with the host port disabled. To connect the [CookCLI integration](https://github.com/cooklang/homeassistant-cookcli) or another API client, open **Configuration → Network**, enable **Show disabled ports**, and enter a host port for `9080/tcp`. Save and restart the app. Use `http://<home-assistant-ip>:9080` as the server URL, substituting your chosen port.
+
+Use Ingress for the browser UI and the host port for direct API calls such as `GET /api/stats`. With Ingress active, CookCLI generates CSS, JavaScript and navigation links under the Ingress path. Opening the browser UI on port `9080` can therefore result in missing assets or broken links.
 
 Home Assistant keeps saved port mappings when updating. If you previously used the old default port and direct access stops after updating, enable it using the same steps.
 
