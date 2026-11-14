@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.6
+
+- Added optional CSRF protection bypass for Home Assistant Ingress compatibility.
+
 ## 0.4.5
 
 - Start in Home Assistant through **Open Web UI**, with an optional **Recepten** sidebar entry.
