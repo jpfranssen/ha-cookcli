@@ -1,4 +1,21 @@
 configuration:
+  users:
+    name: Users
+    description: Accounts with write access in CookCLI; visitors can browse recipes.
+    fields:
+      username:
+        name: Username
+      password:
+        name: Password
+  cors_origins:
+    name: Trusted web origins
+    description: "Add the exact browser origin for each hostname, for example http://homeassistant.local:9080. Include the scheme and port. Omit paths and trailing slashes."
+  disable_csrf_check:
+    name: Disable CSRF protection
+    description: >-
+      Disables CookCLI's CSRF and same-origin checks.
+      Only enable this when using Home Assistant Ingress
+      without direct public access.
   sync:
     name: Synchronization
     description: Optional Git synchronization. Phone synchronization can be added separately later.
@@ -40,16 +57,5 @@ configuration:
           known_hosts_file:
             name: SSH known hosts file
             description: Path under /share/cooklang/ssh/ containing the verified Git server host key.
-  cors_origins:
-    name: Trusted web origins
-    description: "Add the exact browser origin for each hostname, for example http://homeassistant.local:9080. Include the scheme and port. Omit paths and trailing slashes."
-  users:
-    name: Users
-    description: Accounts with write access in CookCLI; visitors can browse recipes.
-    fields:
-      username:
-        name: Username
-      password:
-        name: Password
 network:
   9080/tcp: Optional direct HTTP access for API clients

@@ -1,5 +1,5 @@
 name: CookCLI
-version: "0.4.5"
+version: "0.4.6"
 slug: cookcli
 description: Cooklang recipe server with user management
 url: https://github.com/jpfranssen/ha-cookcli
@@ -26,6 +26,7 @@ map:
 options:
   users: []
   cors_origins: []
+  disable_csrf_check: false
   sync:
     git:
       enabled: false
@@ -38,6 +39,12 @@ options:
       private_key_file: /share/cooklang/ssh/id_ed25519
       known_hosts_file: /share/cooklang/ssh/known_hosts
 schema:
+  users:
+    - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
+      password: password
+  cors_origins:
+    - str
+  disable_csrf_check: bool
   sync:
     git:
       enabled: bool
@@ -53,8 +60,3 @@ schema:
       known_hosts: str?
       private_key_file: str
       known_hosts_file: str
-  cors_origins:
-    - str
-  users:
-    - username: "match(^[a-zA-Z0-9_-]{1,32}$)"
-      password: password

@@ -94,6 +94,14 @@ if [ -s "$OPTIONS" ]; then
 
   rm -f "$origins_file"
 fi
+
+# Optional: disable CSRF protection (workaround for HA Ingress).
+if [ -s "$OPTIONS" ] && \
+   [ "$(jq -r '.disable_csrf_check // false' "$OPTIONS")" = true ]; then
+  echo "WARNING: CookCLI CSRF protection disabled"
+  set -- "$@" --no-csrf-check
+fi
+
 if [ -s "$OPTIONS" ] && [ "$(jq -r '.sync.git.enabled // false' "$OPTIONS")" = true ]; then
   exec python3 /app/sync_service.py "$@"
 fi

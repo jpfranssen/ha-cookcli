@@ -1,4 +1,21 @@
 configuration:
+  users:
+    name: Gebruikers
+    description: Accounts met schrijfrechten in CookCLI; bezoekers mogen recepten bekijken.
+    fields:
+      username:
+        name: Gebruikersnaam
+      password:
+        name: Wachtwoord
+  cors_origins:
+    name: Vertrouwde webadressen
+    description: "Voeg per hostnaam het exacte adres toe, bijvoorbeeld http://homeassistant.local:9080. Neem het protocol en de poort op. Laat het pad en de afsluitende slash weg."
+  disable_csrf_check:
+    name: CSRF-beveiliging uitschakelen
+    description: >-
+      Schakelt de CSRF- en same-origin-controles van CookCLI uit.
+      Gebruik dit alleen via Home Assistant Ingress,
+      zonder directe publieke toegang.
   sync:
     name: Synchronisatie
     description: Optionele Git-synchronisatie. Telefoonsynchronisatie kan later apart worden toegevoegd.
@@ -40,16 +57,5 @@ configuration:
           known_hosts_file:
             name: Bestand met bekende SSH-hosts
             description: Pad onder /share/cooklang/ssh/ met de gecontroleerde hostsleutel van de Git-server.
-  cors_origins:
-    name: Vertrouwde webadressen
-    description: "Voeg per hostnaam het exacte adres toe, bijvoorbeeld http://homeassistant.local:9080. Neem het protocol en de poort op. Laat het pad en de afsluitende slash weg."
-  users:
-    name: Gebruikers
-    description: Accounts met schrijfrechten in CookCLI; bezoekers mogen recepten bekijken.
-    fields:
-      username:
-        name: Gebruikersnaam
-      password:
-        name: Wachtwoord
 network:
   9080/tcp: Optionele directe HTTP-toegang voor API-clients
